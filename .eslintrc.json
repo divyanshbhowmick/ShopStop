@@ -1,0 +1,27 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": [
+        "prettier",
+        "airbnb-base"
+    ],
+    "plugins": ["prettier"],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "rules": {
+        "prettier/prettier":"error",
+        "linebreak-style":  ["error","windows"],
+        "no-unused-vars":"warn",
+        "no-console":"off",
+        "comma-dangle":"off",
+        "implicit-arrow-linebreak":"off",
+        "function-paren-newline":"off",
+        "no-useless-catch":"off",
+        "nonblock-statement-body-position":"off",
+        "curly":"off"
+    }
+}
