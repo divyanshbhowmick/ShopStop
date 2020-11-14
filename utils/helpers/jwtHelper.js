@@ -19,6 +19,7 @@ const signAccessToken = (userID) =>
     });
   });
 
+// eslint-disable-next-line consistent-return
 const verifyAccessToken = (req, res, next) => {
   try {
     if (!req.headers.authorization) return next(createError.Unauthorized());
