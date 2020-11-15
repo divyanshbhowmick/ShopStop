@@ -22,6 +22,7 @@
         "function-paren-newline":"off",
         "no-useless-catch":"off",
         "nonblock-statement-body-position":"off",
-        "curly":"off"
+        "curly":"off",
+        "operator-linebreak":"off"
     }
 }

@@ -2,7 +2,10 @@ const router = require('express').Router();
 const createError = require('http-errors');
 const User = require('../models/User');
 const { registerSchema, loginSchema } = require('../utils/helpers/validator');
-const { signAccessToken } = require('../utils/helpers/jwtHelper');
+const {
+  signAccessToken,
+  signRefreshToken,
+} = require('../utils/helpers/jwtHelper');
 
 router.post('/register', async (req, res, next) => {
   try {
@@ -14,7 +17,8 @@ router.post('/register', async (req, res, next) => {
     const user = new User({ email, name, password });
     const savedUser = await user.save();
     const accessToken = await signAccessToken(savedUser.id);
-    res.send({ accessToken });
+    const refreshToken = await signRefreshToken(savedUser.id);
+    res.send({ accessToken, refreshToken });
   } catch (error) {
     if (error.isJoi) error.status = 422;
     next(error);
@@ -25,14 +29,14 @@ router.post('/login', async (req, res, next) => {
   try {
     const validatedData = await loginSchema.validateAsync(req.body);
     const { email, password } = validatedData;
-    console.log(email);
     const user = await User.findOne({ email });
     if (!user) throw createError.NotFound('User not registered!');
     const isAuthenticated = user.isValidPassword(password);
     if (!isAuthenticated)
       throw createError.Unauthorized('Username/Password not valid!');
     const accessToken = await signAccessToken(user.id);
-    res.send({ accessToken });
+    const refreshToken = await signRefreshToken(user.id);
+    res.send({ accessToken, refreshToken });
   } catch (error) {
     if (error.isJoi) next(createError.BadRequest('Invalid Username/Password!'));
 

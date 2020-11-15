@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
-app.get('/', verifyAccessToken, async (req, res, next) => {
+app.get('/', verifyAccessToken, async (req, res) => {
   res.send('Hello! this server is healthy');
 });
 
